@@ -27,8 +27,8 @@ do
 	echo "Treating line $i"
 	user=$(echo $line | cut -d ";" -f1 | tr -d " ")
 	password=$(echo $line | cut -d ";" -f2 | tr -d " ")
-	name=$(echo $line | cut -d ";" -f7 | tr -d " ")
-	firstN=$(echo $line | cut -d ";" -f8 | tr -d " ")
+	name=$(echo $line | cut -d ";" -f3 | tr -d " ")
+	firstN=$(echo $line | cut -d ";" -f4 | tr -d " ")
 	body=$( jq -nc --arg username "$user" --arg first "$firstN" --arg lastN "$name" --arg passwd "$password" '{"username": $username, "firstName": $first, "lastName": $lastN, "enabled": "true", "credentials": [{"type": "password", "temporary": "false", "value": $passwd}]}' )
 	req=$(curl -i -s -k -X 'POST' -H 'Content-Type: application/json' -H "$autHeader"  -d "$body" "$addUserUrl")
 	i=$((i + 1))
